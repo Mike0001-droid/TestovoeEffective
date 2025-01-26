@@ -1,24 +1,22 @@
-from rest_framework.viewsets import GenericViewSet
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.permissions import AllowAny
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from .forms import OrderForm
 from .models import Order
-from .serializers import OrderSerializer
+from .utils import get_items_from_form
 
-class OrderViewSet(GenericViewSet):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
-    permission_classes = (AllowAny,)
 
-    def list(self, request):
-        queryset = self.get_queryset()
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+def post_orders(request):  
+    if request.method == "POST":
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            get_items_from_form(form)
+            return HttpResponseRedirect("/orders/")
+    else:
+        form = OrderForm()
+    return render(request, "create_orders.html", {"form": form})
 
-    def create(self, request):
-        serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+def orders(request):
+    return render(request, "orders.html", {'orders': Order.objects.all()})
+
+def home(request):
+    return render(request, "home.html")

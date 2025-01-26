@@ -1,0 +1,11 @@
+<body>
+    <h1>Заказы</h1>
+    <a href="/post_orders/"><p>Оформить еще ?</p></a>
+    {% for order in orders %}
+        <h1>Заказ номер {{order.id}}</h1>
+        {% for item in order.items %}
+            <li>{{ item.name }} - {{ item.price }}</li>
+        {% endfor %}
+    {% endfor %}
+    </body>
+</html>
