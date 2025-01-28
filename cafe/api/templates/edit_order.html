@@ -1,0 +1,7 @@
+  <h2>Обновить статус заказа</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Обновить</button>
+  </form>
+  <a href="{% url 'orders' %}">Вернуться к заказам</a>

@@ -2,9 +2,9 @@ from django.db import models
 
 
 STATUS_CHOICES = [
-    ('In waiting', 'В ожидании'),
-    ('Ready', 'Готово'),
-    ('Paid', 'Оплачено')
+    ('В ожидании', 'В ожидании'),
+    ('Готово', 'Готово'),
+    ('Оплачено', 'Оплачено')
 ]
 
 class Item(models.Model):
@@ -12,7 +12,7 @@ class Item(models.Model):
     price = models.IntegerField("Цена за блюдо")
 
     def __str__(self):
-        return f"Блюдо - {self.name}"
+        return f"{self.name} - {self.price}р."
 
 
 class Order(models.Model):
