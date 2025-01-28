@@ -50,6 +50,8 @@ def edit_order(request, pk):
     if request.method == 'POST':
         form = UpdateStatusOrderForm(request.POST, instance=order)
         if form.is_valid():
+            if len(form.cleaned_data['all_items']) != 0:
+                get_items_from_form(form)
             form.save()
             return HttpResponseRedirect("/orders/")
     else:
