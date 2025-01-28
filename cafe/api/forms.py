@@ -2,8 +2,6 @@ from django import forms
 from .models import Item, Order
 
 
-ITEMS_CHOICES= [tuple([int(x.id), x.name]) for x in Item.objects.all()]
-
 
 class OrderForm(forms.ModelForm):
     all_items = forms.ModelMultipleChoiceField(label="Выберите блюда", queryset=Item.objects.all())

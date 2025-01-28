@@ -1,11 +1,19 @@
-from django.db.models import Sum
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .forms import OrderForm, ItemForm, UpdateStatusOrderForm
 from .models import Order
 from .utils import get_items_from_form
+from django.db.models import Q
+from .serializers import OrderSerializer
+from rest_framework.permissions import AllowAny
+from rest_framework import viewsets
 
 
+class OrderViewSet(viewsets.ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = (AllowAny, )
+        
 def post_orders(request):  
     if request.method == "POST":
         form = OrderForm(request.POST)
@@ -15,6 +23,13 @@ def post_orders(request):
     else:
         form = OrderForm()
     return render(request, "create_orders.html", {"form": form})
+
+def search_orders(request):  
+    query = request.GET.get('q')
+    orders = Order.objects.filter(
+        Q(table_number__icontains=query) | Q(status__icontains=query)
+    )
+    return render(request, "orders.html", {"orders": orders})
 
 def orders(request):
     all_orders = Order.objects.all()
