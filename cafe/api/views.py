@@ -24,13 +24,6 @@ def post_orders(request):
         form = OrderForm()
     return render(request, "create_orders.html", {"form": form})
 
-def search_orders(request):  
-    query = request.GET.get('q')
-    orders = Order.objects.filter(
-        Q(table_number__icontains=query) | Q(status__icontains=query)
-    )
-    return render(request, "orders.html", {"orders": orders})
-
 def orders(request):
     all_orders = Order.objects.all()
     return render(

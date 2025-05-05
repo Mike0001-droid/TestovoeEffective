@@ -1,8 +1,4 @@
 <h1 style="text-align: center;">Основное меню</h1>
-<h1>Поиск заказов  
-    <input name="q" type="text" placeholder="Введите статус либо номер стола...">
-    <form action="{% url 'search_orders' %}" method="get"></form>
-</h1>
 <a href="{% url 'post_orders' %}" style="text-decoration: none; color:black;" ><h1>Перейти к оформлению заказа</h1></a>
 <a href="{% url 'post_items' %}" style="text-decoration: none; color:black;"><h1>Перейти к добавлению блюда</h1></a>
 <a href="{% url 'orders' %}" style="text-decoration: none; color:black;"><h1>Просмотреть все заказы</h1></a>
